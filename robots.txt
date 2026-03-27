@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://daniel24ka.github.io/green-city-site/sitemap.xml
