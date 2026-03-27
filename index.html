@@ -1,0 +1,1897 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ירוק בעיר | גינון, אחזקה והקמת גינות</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --green-900: #0a3d1a;
+            --green-800: #14532d;
+            --green-700: #166534;
+            --green-600: #16a34a;
+            --green-500: #22c55e;
+            --green-400: #4ade80;
+            --green-300: #86efac;
+            --green-200: #bbf7d0;
+            --green-100: #dcfce7;
+            --green-50: #f0fdf4;
+            --gold: #d4a843;
+            --gold-light: #f0d68a;
+            --cream: #fafaf5;
+            --text: #1a1a1a;
+            --text-light: #6b7280;
+            --white: #ffffff;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 40px rgba(0,0,0,0.12);
+            --shadow-xl: 0 20px 60px rgba(0,0,0,0.15);
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+        }
+
+        body {
+            font-family: 'Heebo', sans-serif;
+            color: var(--text);
+            background: var(--cream);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* PRELOADER */
+        .preloader {
+            position: fixed;
+            inset: 0;
+            background: var(--green-900);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 20px;
+            transition: opacity 0.6s, visibility 0.6s;
+        }
+
+        .preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .preloader-logo {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .preloader-bar {
+            width: 200px;
+            height: 3px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .preloader-bar::after {
+            content: '';
+            display: block;
+            width: 40%;
+            height: 100%;
+            background: var(--green-400);
+            border-radius: 3px;
+            animation: preload 1s ease-in-out infinite;
+        }
+
+        @keyframes preload {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(350%); }
+        }
+
+        /* CURSOR */
+        .cursor-glow {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            background: radial-gradient(circle, rgba(34,197,94,0.07) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease-out;
+        }
+
+        /* NAVBAR */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 20px 0;
+        }
+
+        nav.scrolled {
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            box-shadow: 0 1px 30px rgba(0,0,0,0.08);
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        nav .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        nav.scrolled .logo { color: var(--green-800); }
+
+        .logo-mark {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, var(--green-500), var(--green-400));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 12px rgba(34,197,94,0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: rgba(255,255,255,0.85);
+            font-weight: 500;
+            font-size: 0.92rem;
+            padding: 10px 20px;
+            border-radius: 100px;
+            transition: all 0.3s;
+        }
+
+        nav.scrolled .nav-links a { color: var(--text); }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.15);
+            color: var(--white);
+        }
+
+        nav.scrolled .nav-links a:hover {
+            background: var(--green-50);
+            color: var(--green-700);
+        }
+
+        .nav-cta {
+            background: var(--green-500) !important;
+            color: var(--white) !important;
+            font-weight: 600 !important;
+            box-shadow: 0 4px 12px rgba(34,197,94,0.3);
+        }
+
+        .nav-cta:hover {
+            background: var(--green-600) !important;
+            color: var(--white) !important;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(34,197,94,0.4) !important;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 8px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .hamburger:hover { background: rgba(255,255,255,0.1); }
+        nav.scrolled .hamburger:hover { background: var(--green-50); }
+
+        .hamburger span {
+            width: 24px;
+            height: 2px;
+            background: var(--white);
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        nav.scrolled .hamburger span { background: var(--text); }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: var(--green-900);
+        }
+
+        .hero-bg-img {
+            position: absolute;
+            inset: 0;
+            background: url('https://images.unsplash.com/photo-1557429287-b2e26467fc2b?w=1920&h=1080&fit=crop&q=80') center/cover no-repeat;
+            opacity: 0.15;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        .hero-gradient {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 50% 50%, rgba(22,163,74,0.3) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 80% at 80% 20%, rgba(34,197,94,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 60% at 20% 80%, rgba(74,222,128,0.1) 0%, transparent 50%);
+        }
+
+        .hero-mesh {
+            position: absolute;
+            inset: 0;
+            opacity: 0.03;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        /* Animated gradient orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: orbFloat 20s infinite ease-in-out;
+        }
+
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: rgba(34,197,94,0.15);
+            top: -10%;
+            right: -10%;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: rgba(74,222,128,0.1);
+            bottom: -10%;
+            left: -5%;
+            animation-delay: -7s;
+        }
+
+        .orb-3 {
+            width: 300px;
+            height: 300px;
+            background: rgba(134,239,172,0.08);
+            top: 40%;
+            left: 30%;
+            animation-delay: -14s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.05); }
+            66% { transform: translate(-20px, 20px) scale(0.95); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 120px 50px 80px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .hero-text { max-width: 600px; }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(34,197,94,0.15);
+            border: 1px solid rgba(34,197,94,0.25);
+            padding: 8px 20px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--green-300);
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .badge-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--green-400);
+            border-radius: 50%;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1.1;
+            color: var(--white);
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--green-400), var(--green-300));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-desc {
+            font-size: 1.15rem;
+            font-weight: 300;
+            color: rgba(255,255,255,0.65);
+            line-height: 1.8;
+            margin-bottom: 40px;
+            max-width: 500px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 32px;
+            border-radius: 100px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: none;
+            font-family: 'Heebo', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--green-500);
+            color: var(--white);
+            box-shadow: 0 4px 15px rgba(34,197,94,0.4);
+        }
+
+        .btn-primary:hover {
+            background: var(--green-600);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(34,197,94,0.5);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--white);
+            border: 1.5px solid rgba(255,255,255,0.25);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.4);
+            transform: translateY(-2px);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 50px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--white);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+            margin-top: 4px;
+        }
+
+        /* Hero Visual Card */
+        .hero-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-card {
+            width: 100%;
+            max-width: 480px;
+            aspect-ratio: 3/4;
+            background: linear-gradient(160deg, rgba(34,197,94,0.2), rgba(22,163,74,0.4));
+            border-radius: var(--radius-xl);
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .hero-card img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-card-inner {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 40px;
+            background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%);
+            z-index: 2;
+        }
+
+        .hero-card h3 {
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .hero-card p {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+        }
+
+        .floating-badge {
+            position: absolute;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text);
+            animation: badgeFloat 6s infinite ease-in-out;
+            z-index: 3;
+        }
+
+        .floating-badge-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .fb-1 {
+            top: 15%;
+            right: -20px;
+            animation-delay: 0s;
+        }
+
+        .fb-1 .floating-badge-icon { background: var(--green-100); }
+
+        .fb-2 {
+            bottom: 20%;
+            left: -30px;
+            animation-delay: -3s;
+        }
+
+        .fb-2 .floating-badge-icon { background: #fef3c7; }
+
+        @keyframes badgeFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* MARQUEE */
+        .marquee-section {
+            background: var(--green-800);
+            padding: 18px 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .marquee-track {
+            display: flex;
+            gap: 50px;
+            animation: marquee 30s linear infinite;
+            width: max-content;
+        }
+
+        .marquee-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .marquee-item span { font-size: 1.1rem; }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* SECTIONS */
+        .section {
+            padding: 120px 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--green-600);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+        }
+
+        .section-label-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--green-500);
+            border-radius: 50%;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--green-900);
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .section-desc {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 550px;
+            line-height: 1.7;
+            margin-bottom: 60px;
+        }
+
+        /* SERVICES */
+        .services-layout {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .service-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 40px 32px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.04);
+            cursor: default;
+        }
+
+        .service-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--green-500), var(--green-400));
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .service-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .service-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 24px;
+            transition: transform 0.5s;
+        }
+
+        .service-card:hover .service-img {
+            transform: scale(1.03);
+        }
+
+        .service-icon-wrap {
+            width: 64px;
+            height: 64px;
+            background: var(--green-50);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 24px;
+            transition: all 0.3s;
+        }
+
+        .service-card:hover .service-icon-wrap {
+            background: var(--green-100);
+            transform: scale(1.05);
+        }
+
+        .service-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--green-900);
+            margin-bottom: 12px;
+        }
+
+        .service-card p {
+            color: var(--text-light);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        /* PROCESS SECTION */
+        .process-bg {
+            background: var(--green-900);
+            padding: 120px 50px;
+        }
+
+        .process-bg .section-label { color: var(--green-400); }
+        .process-bg .section-title { color: var(--white); }
+        .process-bg .section-desc { color: rgba(255,255,255,0.5); }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .process-step {
+            text-align: center;
+            position: relative;
+        }
+
+        .process-num {
+            font-size: 4rem;
+            font-weight: 900;
+            color: rgba(34,197,94,0.15);
+            margin-bottom: 20px;
+            line-height: 1;
+        }
+
+        .process-step-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(34,197,94,0.12);
+            border: 1px solid rgba(34,197,94,0.2);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin: 0 auto 20px;
+        }
+
+        .process-step h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 10px;
+        }
+
+        .process-step p {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.5);
+            line-height: 1.6;
+        }
+
+        .process-connector {
+            position: absolute;
+            top: 85px;
+            left: -15%;
+            width: 30%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(34,197,94,0.2), transparent);
+        }
+
+        /* GALLERY */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .gallery-item {
+            aspect-ratio: 4/3;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .gallery-item.tall { grid-row: span 2; aspect-ratio: auto; }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.08);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);
+            display: flex;
+            align-items: flex-end;
+            padding: 24px;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-overlay p {
+            color: var(--white);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-grid { grid-template-columns: 1fr 1fr; }
+            .gallery-item.tall { grid-row: span 1; aspect-ratio: 4/3; }
+        }
+
+        /* TESTIMONIALS */
+        .testimonials-track {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .testimonial-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 36px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(0,0,0,0.04);
+            transition: all 0.3s;
+        }
+
+        .testimonial-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-4px);
+        }
+
+        .testimonial-stars {
+            font-size: 0.9rem;
+            color: #fbbf24;
+            margin-bottom: 16px;
+            letter-spacing: 2px;
+        }
+
+        .testimonial-text {
+            font-size: 1rem;
+            color: var(--text);
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .testimonial-avatar {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--green-200), var(--green-100));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--green-700);
+            font-size: 1rem;
+        }
+
+        .testimonial-name {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text);
+        }
+
+        .testimonial-role {
+            font-size: 0.82rem;
+            color: var(--text-light);
+        }
+
+        /* CTA SECTION */
+        .cta-section {
+            padding: 0 50px;
+            margin-bottom: 120px;
+        }
+
+        .cta-box {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, var(--green-800), var(--green-700));
+            border-radius: var(--radius-xl);
+            padding: 80px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-box::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(74,222,128,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(34,197,94,0.1) 0%, transparent 50%);
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-box h2 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 16px;
+        }
+
+        .cta-box p {
+            font-size: 1.15rem;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 40px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-white {
+            background: var(--white);
+            color: var(--green-800);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .btn-white:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .btn-whatsapp {
+            background: #25d366;
+            color: var(--white);
+            box-shadow: 0 4px 15px rgba(37,211,102,0.4);
+        }
+
+        .btn-whatsapp:hover {
+            background: #1fb855;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37,211,102,0.5);
+        }
+
+        /* CONTACT */
+        .contact-bg {
+            background: var(--white);
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .contact-info-card {
+            background: var(--green-900);
+            border-radius: var(--radius-xl);
+            padding: 50px;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-info-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 80% 20%, rgba(34,197,94,0.2) 0%, transparent 50%);
+        }
+
+        .contact-info-card > * { position: relative; z-index: 2; }
+
+        .contact-info-card h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .contact-subtitle {
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 40px;
+            font-size: 0.95rem;
+        }
+
+        .contact-detail {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .contact-detail-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .contact-detail-text a {
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .contact-detail strong {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 0.95rem;
+        }
+
+        .contact-detail span {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+        }
+
+        .contact-form {
+            padding: 50px;
+            background: var(--cream);
+            border-radius: var(--radius-xl);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .contact-form h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--green-900);
+            margin-bottom: 30px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--green-800);
+            font-size: 0.88rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1.5px solid rgba(0,0,0,0.08);
+            border-radius: var(--radius-sm);
+            font-size: 0.95rem;
+            font-family: 'Heebo', sans-serif;
+            transition: all 0.3s;
+            background: var(--white);
+            color: var(--text);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--green-500);
+            box-shadow: 0 0 0 3px rgba(34,197,94,0.1);
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            background: var(--green-600);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: 'Heebo', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-submit:hover {
+            background: var(--green-700);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(22,101,52,0.3);
+        }
+
+        /* FOOTER */
+        footer {
+            background: #0a0a0a;
+            color: rgba(255,255,255,0.5);
+            padding: 60px 50px 30px;
+        }
+
+        .footer-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .footer-brand .logo {
+            color: var(--white);
+            margin-bottom: 12px;
+        }
+
+        .footer-brand p {
+            max-width: 300px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .footer-links h4 {
+            color: var(--white);
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            font-size: 0.88rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover { color: var(--green-400); }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding-top: 25px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.82rem;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        /* WHATSAPP FLOAT */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .wa-btn {
+            width: 60px;
+            height: 60px;
+            background: #25d366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+            box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .wa-btn::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 2px solid rgba(37,211,102,0.3);
+            animation: waPulse 2s infinite;
+        }
+
+        @keyframes waPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.15); opacity: 0; }
+        }
+
+        .wa-btn:hover { transform: scale(1.1); }
+
+        .wa-tooltip {
+            background: var(--white);
+            color: var(--text);
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 10px 18px;
+            border-radius: 10px;
+            box-shadow: var(--shadow-md);
+            white-space: nowrap;
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.3s;
+        }
+
+        .whatsapp-float:hover .wa-tooltip {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* SCROLL REVEAL */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+        .reveal-delay-5 { transition-delay: 0.5s; }
+
+        /* BACK TO TOP */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 48px;
+            height: 48px;
+            background: var(--green-600);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border: none;
+            z-index: 998;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s;
+            box-shadow: var(--shadow-md);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            background: var(--green-700);
+            transform: translateY(-3px);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                padding: 120px 30px 60px;
+                gap: 40px;
+            }
+
+            .hero-visual { display: none; }
+            .services-layout { grid-template-columns: repeat(2, 1fr); }
+            .process-grid { grid-template-columns: repeat(2, 1fr); gap: 40px; }
+            .process-connector { display: none; }
+            .testimonials-track { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                right: 0;
+                left: 0;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                gap: 4px;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+                border-radius: 0 0 var(--radius-md) var(--radius-md);
+            }
+
+            .nav-links.active { display: flex; }
+            .nav-links a { color: var(--text) !important; padding: 14px 20px; border-radius: 10px; }
+            .nav-links a:hover { background: var(--green-50) !important; color: var(--green-700) !important; }
+
+            .hamburger { display: flex; }
+
+            .hero h1 { font-size: 2.5rem; }
+            .hero-desc { font-size: 1rem; }
+            .hero-stats { gap: 30px; }
+            .stat-number { font-size: 1.6rem; }
+
+            .section { padding: 80px 20px; }
+            .section-title { font-size: 2rem; }
+
+            .services-layout { grid-template-columns: 1fr; }
+            .process-grid { grid-template-columns: 1fr 1fr; }
+            .process-bg { padding: 80px 20px; }
+            .testimonials-track { grid-template-columns: 1fr; }
+
+            .cta-section { padding: 0 20px; }
+            .cta-box { padding: 50px 30px; }
+            .cta-box h2 { font-size: 2rem; }
+
+            .contact-grid { grid-template-columns: 1fr; gap: 30px; }
+            .contact-info-card { padding: 30px; }
+            .contact-form { padding: 30px; }
+            .form-row { grid-template-columns: 1fr; }
+
+            footer { padding: 40px 20px 20px; }
+            .footer-top { flex-direction: column; }
+
+            nav .nav-inner { padding: 0 20px; }
+
+            .hero-actions { flex-direction: column; }
+            .btn { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <!-- PRELOADER -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-logo">
+            <span>🌿</span> ירוק בעיר
+        </div>
+        <div class="preloader-bar"></div>
+    </div>
+
+    <!-- CURSOR GLOW -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+
+    <!-- NAVBAR -->
+    <nav id="navbar">
+        <div class="nav-inner">
+            <a href="#home" class="logo">
+                <div class="logo-mark">🌿</div>
+                ירוק בעיר
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">דף הבית</a></li>
+                <li><a href="#services">שירותים</a></li>
+                <li><a href="#process">איך עובדים</a></li>
+                <li><a href="#reviews">המלצות</a></li>
+                <li><a href="#contact">צור קשר</a></li>
+                <li><a href="https://wa.me/972534295336" target="_blank" class="nav-cta">💬 WhatsApp</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="תפריט">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+        <div class="hero-bg-img"></div>
+        <div class="hero-bg">
+            <div class="hero-gradient"></div>
+            <div class="hero-mesh"></div>
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+        </div>
+
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="hero-badge">
+                    <div class="badge-dot"></div>
+                    גינון מקצועי באזור המרכז
+                </div>
+                <h1>הגינה שתמיד<br><span class="highlight">חלמתם עליה</span></h1>
+                <p class="hero-desc">מתכננים, מקימים ומתחזקים גינות ברמה הגבוהה ביותר. הצוות של דניאל מלווה אתכם מהרעיון ועד גינה ירוקה ופורחת.</p>
+                <div class="hero-actions">
+                    <a href="#contact" class="btn btn-primary">קבלו הצעת מחיר חינם ←</a>
+                    <a href="https://wa.me/972534295336" target="_blank" class="btn btn-outline">💬 דברו איתנו</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number" data-count="150">0</span>
+                        <div class="stat-label">פרויקטים</div>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" data-count="8">0</span>
+                        <div class="stat-label">שנות ניסיון</div>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" data-count="100">0</span>
+                        <div class="stat-label">% שביעות רצון</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="hero-card">
+                    <img src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=600&h=800&fit=crop&q=80" alt="גינה יפה" loading="eager">
+                    <div class="hero-card-inner">
+                        <h3>פרויקט גינה פרטית</h3>
+                        <p>תכנון והקמה מלאה - רמת השרון</p>
+                    </div>
+                </div>
+                <div class="floating-badge fb-1">
+                    <div class="floating-badge-icon">✅</div>
+                    <div>
+                        <strong>איכות ללא פשרות</strong>
+                        <div style="font-size:0.75rem;color:#888;">חומרים מהשורה הראשונה</div>
+                    </div>
+                </div>
+                <div class="floating-badge fb-2">
+                    <div class="floating-badge-icon">⭐</div>
+                    <div>
+                        <strong>5.0 דירוג</strong>
+                        <div style="font-size:0.75rem;color:#888;">מעל 100 לקוחות</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee-section">
+        <div class="marquee-track">
+            <div class="marquee-item"><span>🌿</span> הקמת גינות</div>
+            <div class="marquee-item"><span>✂️</span> גיזום מקצועי</div>
+            <div class="marquee-item"><span>💧</span> מערכות השקיה</div>
+            <div class="marquee-item"><span>🌳</span> עיצוב נוף</div>
+            <div class="marquee-item"><span>🏡</span> גינות פרטיות</div>
+            <div class="marquee-item"><span>🌱</span> דשא סינטטי</div>
+            <div class="marquee-item"><span>🎨</span> תכנון גינות</div>
+            <div class="marquee-item"><span>🔧</span> אחזקה שוטפת</div>
+            <div class="marquee-item"><span>🌿</span> הקמת גינות</div>
+            <div class="marquee-item"><span>✂️</span> גיזום מקצועי</div>
+            <div class="marquee-item"><span>💧</span> מערכות השקיה</div>
+            <div class="marquee-item"><span>🌳</span> עיצוב נוף</div>
+            <div class="marquee-item"><span>🏡</span> גינות פרטיות</div>
+            <div class="marquee-item"><span>🌱</span> דשא סינטטי</div>
+            <div class="marquee-item"><span>🎨</span> תכנון גינות</div>
+            <div class="marquee-item"><span>🔧</span> אחזקה שוטפת</div>
+        </div>
+    </div>
+
+    <!-- SERVICES -->
+    <section class="section" id="services">
+        <div class="section-label reveal"><div class="section-label-dot"></div> השירותים שלנו</div>
+        <h2 class="section-title reveal">כל מה שהגינה שלכם צריכה</h2>
+        <p class="section-desc reveal">מגוון פתרונות גינון מקצועיים לבית ולעסק, מתכנון ראשוני ועד אחזקה שוטפת</p>
+
+        <div class="services-layout">
+            <div class="service-card reveal reveal-delay-1">
+                <img class="service-img" src="https://images.unsplash.com/photo-1558904541-efa843a96f01?w=500&h=300&fit=crop&q=80" alt="הקמת גינות" loading="lazy">
+                <h3>הקמת גינות</h3>
+                <p>תכנון והקמת גינות מהיסוד - גינות פרטיות, גינות גג ומרפסות. מהחלום למציאות ירוקה ופורחת.</p>
+            </div>
+
+            <div class="service-card reveal reveal-delay-2">
+                <img class="service-img" src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=500&h=300&fit=crop&q=80" alt="אחזקת גינות" loading="lazy">
+                <h3>אחזקת גינות</h3>
+                <p>שירות אחזקה שוטף הכולל גיזום, דישון, ניכוש וטיפול בדשא. הגינה שלכם במיטבה כל השנה.</p>
+            </div>
+
+            <div class="service-card reveal reveal-delay-3">
+                <img class="service-img" src="https://images.unsplash.com/photo-1598902108854-d1446413a937?w=500&h=300&fit=crop&q=80" alt="עיצוב נוף" loading="lazy">
+                <h3>עיצוב נוף</h3>
+                <p>עיצוב מקצועי המשלב צמחייה, אבנים, תאורה ואלמנטים דקורטיביים למרחב חיצוני מושלם.</p>
+            </div>
+
+            <div class="service-card reveal reveal-delay-1">
+                <img class="service-img" src="https://images.unsplash.com/photo-1563293958-6a5a0e46ef67?w=500&h=300&fit=crop&q=80" alt="מערכות השקיה" loading="lazy">
+                <h3>מערכות השקיה</h3>
+                <p>התקנת מערכות השקיה אוטומטיות וחכמות. חיסכון במים ושמירה על צמחייה בריאה.</p>
+            </div>
+
+            <div class="service-card reveal reveal-delay-2">
+                <img class="service-img" src="https://images.unsplash.com/photo-1600240644455-3edc55c375fe?w=500&h=300&fit=crop&q=80" alt="גיזום וכריתה" loading="lazy">
+                <h3>גיזום וכריתה</h3>
+                <p>גיזום מקצועי של עצים ושיחים, כריתת עצים מסוכנים ועיצוב צמחייה לבטיחות ואסתטיקה.</p>
+            </div>
+
+            <div class="service-card reveal reveal-delay-3">
+                <img class="service-img" src="https://images.unsplash.com/photo-1592150621744-aca64f48394a?w=500&h=300&fit=crop&q=80" alt="דשא" loading="lazy">
+                <h3>דשא סינטטי וטבעי</h3>
+                <p>התקנת דשא סינטטי איכותי או מרבדי דשא טבעי - פתרון מושלם לכל גינה ומרפסת.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="process-bg" id="process">
+        <div style="max-width:1400px;margin:0 auto;">
+            <div class="section-label reveal"><div class="section-label-dot"></div> תהליך העבודה</div>
+            <h2 class="section-title reveal">איך עובדים?</h2>
+            <p class="section-desc reveal">ארבעה שלבים פשוטים מהפנייה הראשונית ועד גינה מושלמת</p>
+        </div>
+
+        <div class="process-grid">
+            <div class="process-step reveal reveal-delay-1">
+                <div class="process-num">01</div>
+                <div class="process-step-icon">📞</div>
+                <h3>פנייה ראשונית</h3>
+                <p>יוצרים קשר בטלפון או WhatsApp וקובעים מועד לסיור באתר</p>
+            </div>
+            <div class="process-step reveal reveal-delay-2">
+                <div class="process-connector"></div>
+                <div class="process-num">02</div>
+                <div class="process-step-icon">📐</div>
+                <h3>סיור ותכנון</h3>
+                <p>מגיעים לביקור, מבינים את הצרכים ומתכננים את הגינה המושלמת</p>
+            </div>
+            <div class="process-step reveal reveal-delay-3">
+                <div class="process-connector"></div>
+                <div class="process-num">03</div>
+                <div class="process-step-icon">🏗️</div>
+                <h3>ביצוע מקצועי</h3>
+                <p>הצוות מגיע ומבצע את העבודה ביעילות וברמה הגבוהה ביותר</p>
+            </div>
+            <div class="process-step reveal reveal-delay-4">
+                <div class="process-connector"></div>
+                <div class="process-num">04</div>
+                <div class="process-step-icon">🌸</div>
+                <h3>גינה מושלמת</h3>
+                <p>נהנים מגינה ירוקה ומטופחת עם אפשרות לאחזקה שוטפת</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="section" id="gallery">
+        <div class="section-label reveal"><div class="section-label-dot"></div> העבודות שלנו</div>
+        <h2 class="section-title reveal">גלריית פרויקטים</h2>
+        <p class="section-desc reveal">הצצה לכמה מהפרויקטים האחרונים שביצענו</p>
+
+        <div class="gallery-grid">
+            <div class="gallery-item tall reveal reveal-delay-1">
+                <img src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=600&h=900&fit=crop&q=80" alt="גינה פרטית" loading="lazy">
+                <div class="gallery-overlay"><p>הקמת גינה פרטית</p></div>
+            </div>
+            <div class="gallery-item reveal reveal-delay-2">
+                <img src="https://images.unsplash.com/photo-1558904541-efa843a96f01?w=600&h=450&fit=crop&q=80" alt="עיצוב נוף" loading="lazy">
+                <div class="gallery-overlay"><p>עיצוב נוף</p></div>
+            </div>
+            <div class="gallery-item reveal reveal-delay-3">
+                <img src="https://images.unsplash.com/photo-1591857177580-dc82b9ac4e1e?w=600&h=450&fit=crop&q=80" alt="גינת גג" loading="lazy">
+                <div class="gallery-overlay"><p>גינת גג</p></div>
+            </div>
+            <div class="gallery-item reveal reveal-delay-2">
+                <img src="https://images.unsplash.com/photo-1592150621744-aca64f48394a?w=600&h=450&fit=crop&q=80" alt="התקנת דשא" loading="lazy">
+                <div class="gallery-overlay"><p>התקנת דשא</p></div>
+            </div>
+            <div class="gallery-item reveal reveal-delay-3">
+                <img src="https://images.unsplash.com/photo-1599629954294-43139b888c7c?w=600&h=450&fit=crop&q=80" alt="מערכת השקיה" loading="lazy">
+                <div class="gallery-overlay"><p>מערכת השקיה</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="section" id="reviews">
+        <div class="section-label reveal"><div class="section-label-dot"></div> מה הלקוחות אומרים</div>
+        <h2 class="section-title reveal">המלצות</h2>
+        <p class="section-desc reveal">הלקוחות שלנו מספרים על החוויה</p>
+
+        <div class="testimonials-track">
+            <div class="testimonial-card reveal reveal-delay-1">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">דניאל הקים לנו גינה מדהימה! מקצועי, אדיב ועמד בכל ההבטחות. התוצאה עלתה על כל הציפיות שלנו. ממליצים בחום!</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">מ.כ</div>
+                    <div>
+                        <div class="testimonial-name">משפחת כהן</div>
+                        <div class="testimonial-role">הקמת גינה פרטית, הרצליה</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card reveal reveal-delay-2">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">עובדים עם ירוק בעיר על אחזקה שוטפת כבר שנתיים. הגינה תמיד נראית מושלמת, שירות אמין ומקצועי. פשוט שקט נפשי!</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">ר.ל</div>
+                    <div>
+                        <div class="testimonial-name">רונית לוי</div>
+                        <div class="testimonial-role">אחזקה שוטפת, רעננה</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card reveal reveal-delay-3">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">ביקשנו עיצוב נוף למשרד וקיבלנו תוצאה ברמה אחרת. דניאל הבין בדיוק מה רצינו ואפילו הוסיף רעיונות מצוינים משלו.</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">א.ש</div>
+                    <div>
+                        <div class="testimonial-name">אבי שפירא</div>
+                        <div class="testimonial-role">עיצוב נוף למשרד, תל אביב</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <div class="cta-section">
+        <div class="cta-box reveal">
+            <div class="cta-content">
+                <h2>מוכנים להפוך את הגינה לגן עדן?</h2>
+                <p>צרו קשר עוד היום לייעוץ חינם והצעת מחיר ללא התחייבות</p>
+                <div class="cta-buttons">
+                    <a href="tel:0534295336" class="btn btn-white">📞 053-429-5336</a>
+                    <a href="https://wa.me/972534295336" target="_blank" class="btn btn-whatsapp">💬 שלחו WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTACT -->
+    <section class="contact-bg" id="contact">
+        <div class="section" style="padding-bottom:120px;">
+            <div class="section-label reveal"><div class="section-label-dot"></div> צרו קשר</div>
+            <h2 class="section-title reveal">דברו איתנו</h2>
+            <p class="section-desc reveal">נשמח לשמוע מכם ולתת הצעת מחיר מותאמת</p>
+
+            <div class="contact-grid">
+                <div class="contact-info-card reveal">
+                    <h3>דניאל - ירוק בעיר</h3>
+                    <p class="contact-subtitle">גינון, אחזקה והקמת גינות באזור המרכז</p>
+
+                    <div class="contact-detail">
+                        <div class="contact-detail-icon">📞</div>
+                        <div class="contact-detail-text">
+                            <strong>טלפון</strong>
+                            <span><a href="tel:0534295336">053-429-5336</a></span>
+                        </div>
+                    </div>
+
+                    <div class="contact-detail">
+                        <div class="contact-detail-icon">💬</div>
+                        <div class="contact-detail-text">
+                            <strong>WhatsApp</strong>
+                            <span><a href="https://wa.me/972534295336" target="_blank">לחצו לשליחת הודעה</a></span>
+                        </div>
+                    </div>
+
+                    <div class="contact-detail">
+                        <div class="contact-detail-icon">📍</div>
+                        <div class="contact-detail-text">
+                            <strong>אזור שירות</strong>
+                            <span>אזור המרכז</span>
+                        </div>
+                    </div>
+
+                    <div class="contact-detail">
+                        <div class="contact-detail-icon">🕐</div>
+                        <div class="contact-detail-text">
+                            <strong>שעות פעילות</strong>
+                            <span>ראשון - שישי, 07:00 - 18:00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="contact-form reveal" id="contactForm">
+                    <h3>השאירו פרטים</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>שם מלא</label>
+                            <input type="text" name="name" placeholder="הכניסו את שמכם" required>
+                        </div>
+                        <div class="form-group">
+                            <label>טלפון</label>
+                            <input type="tel" name="phone" placeholder="050-000-0000" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>איזה שירות מעניין אתכם?</label>
+                        <select name="service">
+                            <option value="">בחרו שירות...</option>
+                            <option>הקמת גינה</option>
+                            <option>אחזקת גינה</option>
+                            <option>עיצוב נוף</option>
+                            <option>מערכת השקיה</option>
+                            <option>גיזום וכריתה</option>
+                            <option>דשא סינטטי / טבעי</option>
+                            <option>אחר</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>ספרו לנו עוד</label>
+                        <textarea name="message" placeholder="פרטים על הפרויקט, גודל הגינה, מיקום..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">שלחו פנייה ←</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="#home" class="logo">
+                        <div class="logo-mark">🌿</div>
+                        ירוק בעיר
+                    </a>
+                    <p>גינון מקצועי, אחזקה והקמת גינות באזור המרכז. מחויבים לאיכות, מקצועיות ושביעות רצון מלאה.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>שירותים</h4>
+                    <ul>
+                        <li><a href="#services">הקמת גינות</a></li>
+                        <li><a href="#services">אחזקת גינות</a></li>
+                        <li><a href="#services">עיצוב נוף</a></li>
+                        <li><a href="#services">מערכות השקיה</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>ניווט</h4>
+                    <ul>
+                        <li><a href="#home">דף הבית</a></li>
+                        <li><a href="#process">תהליך עבודה</a></li>
+                        <li><a href="#reviews">המלצות</a></li>
+                        <li><a href="#contact">צור קשר</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>צרו קשר</h4>
+                    <ul>
+                        <li><a href="tel:0534295336">📞 053-429-5336</a></li>
+                        <li><a href="https://wa.me/972534295336" target="_blank">💬 WhatsApp</a></li>
+                        <li><a>📍 אזור המרכז</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2026 ירוק בעיר - כל הזכויות שמורות</span>
+                <span>עוצב ונבנה עם 💚</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WHATSAPP FLOAT -->
+    <a href="https://wa.me/972534295336" target="_blank" class="whatsapp-float">
+        <div class="wa-tooltip">דברו איתנו!</div>
+        <div class="wa-btn">💬</div>
+    </a>
+
+    <!-- BACK TO TOP -->
+    <button class="back-to-top" id="backToTop" aria-label="חזרה למעלה">↑</button>
+
+    <script>
+        // Preloader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('preloader').classList.add('hidden');
+            }, 800);
+        });
+
+        // Cursor glow (desktop only)
+        const glow = document.getElementById('cursorGlow');
+        if (window.innerWidth > 768) {
+            document.addEventListener('mousemove', (e) => {
+                glow.style.left = e.clientX + 'px';
+                glow.style.top = e.clientY + 'px';
+            });
+        } else {
+            glow.style.display = 'none';
+        }
+
+        // Navbar scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 60);
+        });
+
+        // Hamburger
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        hamburger.addEventListener('click', () => navLinks.classList.toggle('active'));
+        navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('active')));
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', function(e) {
+                e.preventDefault();
+                const t = document.querySelector(this.getAttribute('href'));
+                if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // Scroll reveal
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        // Counter animation
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const target = parseInt(el.dataset.count);
+                    const suffix = el.closest('.stat').querySelector('.stat-label').textContent.includes('%') ? '%' : '+';
+                    let current = 0;
+                    const step = target / 60;
+                    const timer = setInterval(() => {
+                        current += step;
+                        if (current >= target) {
+                            current = target;
+                            clearInterval(timer);
+                        }
+                        el.textContent = Math.floor(current) + suffix;
+                    }, 25);
+                    counterObserver.unobserve(el);
+                }
+            });
+        }, { threshold: 0.5 });
+        document.querySelectorAll('.stat-number').forEach(el => counterObserver.observe(el));
+
+        // Back to top
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backToTop.classList.toggle('visible', window.scrollY > 500);
+        });
+        backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        // Contact form -> WhatsApp
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const fd = new FormData(this);
+            const msg = `שלום דניאל! 👋%0A%0Aשם: ${fd.get('name')}%0Aטלפון: ${fd.get('phone')}%0Aשירות: ${fd.get('service')}%0A%0A${fd.get('message')}`;
+            window.open(`https://wa.me/972534295336?text=${msg}`, '_blank');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
